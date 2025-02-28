@@ -1,33 +1,36 @@
-// src/components/ContactForm.jsx
-import { Container, TextField, Button, Box, Typography } from "@mui/material";
+import PropTypes from 'prop-types';
+import { TextField, Button, Box, Dialog, DialogActions, DialogContent, DialogTitle, IconButton } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 
-function ContactForm() {
+function ContactForm({ open, onClose }) {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Handle form submission
+    onClose();
+  };
+
   return (
-    <Box
-      sx={{
-        minHeight: "80vh",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        py: { xs: 4, sm: 6, md: 8 },
-        bgcolor: "background.paper",
-      }}
-    >
-      <Container maxWidth="sm">
-        <Typography
-          variant="h4"
-          align="center"
-          gutterBottom
+    <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
+      <DialogTitle>
+        Contáctanos
+        <IconButton
+          aria-label="close"
+          onClick={onClose}
           sx={{
-            fontSize: { xs: "1.75rem", sm: "2.25rem", md: "2.5rem" },
-            mb: { xs: 3, sm: 4 },
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
           }}
         >
-          Contáctanos
-        </Typography>
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
+      <DialogContent>
         <Box
           component="form"
           noValidate
+          onSubmit={handleSubmit}
           sx={{
             mt: { xs: 2, sm: 3 },
             "& .MuiTextField-root": { mb: 2 },
@@ -66,23 +69,22 @@ function ContactForm() {
             multiline
             rows={4}
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{
-              mt: 3,
-              mb: 2,
-              py: { xs: 1.5, sm: 2 },
-              fontSize: { xs: "0.9rem", sm: "1rem" },
-            }}
-          >
-            Enviar
-          </Button>
         </Box>
-      </Container>
-    </Box>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClose} color="primary" variant="contained">
+          Cancelar
+        </Button>
+        <Button type="submit" color="primary" variant="contained">
+          Enviar
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 }
+ContactForm.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
 
 export default ContactForm;

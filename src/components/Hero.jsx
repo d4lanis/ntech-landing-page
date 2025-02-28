@@ -1,6 +1,7 @@
 import { Box, Container, Typography, Button } from "@mui/material";
+import PropTypes from 'prop-types';
 
-function Hero() {
+function Hero({ onOpenContactForm }) {
   return (
     <Box
       sx={{
@@ -81,6 +82,7 @@ function Hero() {
               px: { xs: 4, sm: 6 },
               fontSize: { xs: "1rem", sm: "1.25rem" },
             }}
+            onClick={onOpenContactForm}
           >
             Cotiza aquí
           </Button>
@@ -89,5 +91,8 @@ function Hero() {
     </Box>
   );
 }
+Hero.propTypes = {
+  onOpenContactForm: PropTypes.func.isRequired,
+};
 
 export default Hero;
