@@ -1,5 +1,5 @@
-// src/components/Navbar.jsx
 import { useState } from "react";
+import PropTypes from "prop-types";
 import {
   AppBar,
   Box,
@@ -13,9 +13,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
-const pages = ["Inicio", "Servicios", "Ubicación", "Contáctanos"];
-
-function Navbar() {
+function Navbar({ onOpenContactForm }) {
   const [anchorElNav, setAnchorElNav] = useState(null);
 
   const handleOpenNavMenu = (event) => {
@@ -26,18 +24,11 @@ function Navbar() {
     setAnchorElNav(null);
   };
 
-  const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      // Ajuste para compensar la altura del navbar
-      const navbarHeight = 64; // altura del navbar
-      const elementPosition = element.offsetTop - navbarHeight;
-      window.scrollTo({
-        top: elementPosition,
-        behavior: "smooth",
-      });
+  const scrollToSection = (id) => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-    handleCloseNavMenu();
   };
 
   return (
@@ -101,14 +92,38 @@ function Navbar() {
                   display: { xs: "block", md: "none" },
                 }}
               >
-                {pages.map((page) => (
-                  <MenuItem
-                    key={page}
-                    onClick={() => scrollToSection(page.toLowerCase())}
-                  >
-                    <Typography textAlign="center">{page}</Typography>
-                  </MenuItem>
-                ))}
+                <MenuItem
+                  onClick={() => {
+                    handleCloseNavMenu();
+                    scrollToSection("inicio");
+                  }}
+                >
+                  <Typography textAlign="center">Inicio</Typography>
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    handleCloseNavMenu();
+                    scrollToSection("servicios");
+                  }}
+                >
+                  <Typography textAlign="center">Servicios</Typography>
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    handleCloseNavMenu();
+                    scrollToSection("ubicacion");
+                  }}
+                >
+                  <Typography textAlign="center">Ubicación</Typography>
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    handleCloseNavMenu();
+                    onOpenContactForm();
+                  }}
+                >
+                  <Typography textAlign="center">Contáctanos</Typography>
+                </MenuItem>
               </Menu>
             </Box>
 
@@ -138,23 +153,62 @@ function Navbar() {
                 justifyContent: "flex-end",
               }}
             >
-              {pages.map((page) => (
-                <Button
-                  key={page}
-                  onClick={() => scrollToSection(page.toLowerCase())}
-                  sx={{
-                    my: 2,
-                    mx: 1,
-                    color: "primary.main",
-                    display: "block",
-                    "&:hover": {
-                      backgroundColor: "rgba(0, 69, 139, 0.08)",
-                    },
-                  }}
-                >
-                  {page}
-                </Button>
-              ))}
+              <Button
+                onClick={() => scrollToSection("inicio")}
+                sx={{
+                  my: 2,
+                  mx: 1,
+                  color: "primary.main",
+                  display: "block",
+                  "&:hover": {
+                    backgroundColor: "rgba(0, 69, 139, 0.08)",
+                  },
+                }}
+              >
+                Inicio
+              </Button>
+              <Button
+                onClick={() => scrollToSection("servicios")}
+                sx={{
+                  my: 2,
+                  mx: 1,
+                  color: "primary.main",
+                  display: "block",
+                  "&:hover": {
+                    backgroundColor: "rgba(0, 69, 139, 0.08)",
+                  },
+                }}
+              >
+                Servicios
+              </Button>
+              <Button
+                onClick={() => scrollToSection("ubicacion")}
+                sx={{
+                  my: 2,
+                  mx: 1,
+                  color: "primary.main",
+                  display: "block",
+                  "&:hover": {
+                    backgroundColor: "rgba(0, 69, 139, 0.08)",
+                  },
+                }}
+              >
+                Ubicación
+              </Button>
+              <Button
+                onClick={onOpenContactForm}
+                sx={{
+                  my: 2,
+                  mx: 1,
+                  color: "primary.main",
+                  display: "block",
+                  "&:hover": {
+                    backgroundColor: "rgba(0, 69, 139, 0.08)",
+                  },
+                }}
+              >
+                Contáctanos
+              </Button>
             </Box>
           </Toolbar>
         </Container>
@@ -164,5 +218,9 @@ function Navbar() {
     </>
   );
 }
+
+Navbar.propTypes = {
+  onOpenContactForm: PropTypes.func.isRequired,
+};
 
 export default Navbar;

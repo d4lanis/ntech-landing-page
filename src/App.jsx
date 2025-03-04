@@ -1,6 +1,5 @@
-// src/App.jsx
 import { ThemeProvider } from '@mui/material/styles';
-import { CssBaseline, Box, Button } from '@mui/material';
+import { CssBaseline, Box } from '@mui/material';
 import { theme } from './theme';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -26,7 +25,7 @@ function App() {
           minHeight: '100vh', // Asegura altura mínima de toda la ventana
         }}
       >
-        <Navbar />
+        <Navbar onOpenContactForm={handleOpenContactForm} />
         <Box
           component="main"
           sx={{
@@ -35,10 +34,15 @@ function App() {
             flexDirection: 'column',
           }}
         >
-          <Hero id="inicio" onOpenContactForm={handleOpenContactForm} />
-          <Services id="servicios" />
-          <Location id="ubicacion" />
-          <Button onClick={handleOpenContactForm}>Contáctanos</Button>
+          <Box id="inicio">
+            <Hero onOpenContactForm={handleOpenContactForm} />
+          </Box>
+          <Box id="servicios">
+            <Services />
+          </Box>
+          <Box id="ubicacion">
+            <Location />
+          </Box>
         </Box>
         <Footer />
       </Box>
